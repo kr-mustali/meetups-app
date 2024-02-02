@@ -23,26 +23,4 @@ async function postHandler(req: Request, res: NextApiResponse) {
   }
 }
 
-async function getHandler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === "GET") {
-    try {
-      const client = await MongoClient.connect(
-        "mongodb+srv://new_user:admin@cluster0.gusc1.mongodb.net/users?retryWrites=true&w=majority"
-      );
-
-      const db = client.db();
-      const userCollection = db.collection("users");
-
-      const data = await userCollection.find().toArray();
-
-      client.close();
-
-      return NextResponse.json({ data: data }, { status: 200 });
-    } catch (error) {
-      console.log(error);
-      return NextResponse.json({ error: error }, { status: 500 });
-    }
-  }
-}
-
-export { postHandler as POST, getHandler as GET };
+export { postHandler as POST };

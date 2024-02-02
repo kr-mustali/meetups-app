@@ -11,7 +11,7 @@ async function getHandler(
     try {
       const { db } = await connectToDatabase();
 
-      const myquery = { _id: new ObjectId(params.meetupId) };
+      const myquery:any = { _id: new ObjectId(params.meetupId) };
       const userCollection = db.collection("users");
 
       const data = await userCollection.findOne(myquery);

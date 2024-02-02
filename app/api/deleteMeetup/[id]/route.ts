@@ -11,7 +11,7 @@ async function handler(
     try {
       const { db } = await connectToDatabase();
       const userCollection = db.collection("users");
-      const myquery = { _id: new ObjectId(params.id) };
+      const myquery: any = { _id: new ObjectId(params.id) };
 
       const deletedMeetup = await userCollection.deleteOne(myquery);
 
