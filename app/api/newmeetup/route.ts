@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
+import { connectToDatabase } from "../../../db/mongodb";
 
 async function postHandler(req: Request, res: NextApiResponse) {
   if (req.method === "POST") {
@@ -9,15 +10,11 @@ async function postHandler(req: Request, res: NextApiResponse) {
       console.log(body);
       const data = body;
 
-      const client = await MongoClient.connect(
-        "mongodb+srv://new_user:admin@cluster0.gusc1.mongodb.net/users?retryWrites=true&w=majority"
-      );
+      const { db } = await connectToDatabase();
 
-      const db = client.db();
       const userCollection = db.collection("users");
 
       const result = await userCollection.insertOne(data);
-      client.close();
       return NextResponse.json({ data: result }, { status: 201 });
     } catch (error) {
       console.log(error);

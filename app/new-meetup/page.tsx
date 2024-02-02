@@ -1,15 +1,17 @@
+import React from "react";
+import MeetupForm from "../components/MeetupForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-export default async function ProtectedRoute() {
+const SignUp = async () => {
   const session = await getServerSession();
   if (!session || !session.user) {
     redirect("/api/auth/signin");
   }
   return (
     <div>
-      This is a protected route
-      <br />
-      You are authenticated!
+      <MeetupForm />
     </div>
   );
-}
+};
+
+export default SignUp;
